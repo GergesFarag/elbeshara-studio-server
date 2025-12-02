@@ -3,8 +3,8 @@ import { InjectModel } from '@nestjs/mongoose';
 import { GalleryItem } from './schemas/gallery-item.schema';
 import { Model } from 'mongoose';
 import { CreateGalleryItemDTO } from './dtos/create-galleryItem.dto';
-import { PaginationDTO } from 'src/common/dtos/pagination.dto';
-import { PaginationService } from 'src/common/services/pagination';
+import { PaginationDTO } from '../../common/dtos/pagination.dto';
+import { PaginationService } from '../../common/services/pagination';
 
 @Injectable()
 export class GalleryService {

@@ -1,13 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { GalleryService } from './gallery.service';
 import { CreateGalleryItemDTO } from './dtos/create-galleryItem.dto';
-import { PaginationDTO } from 'src/common/dtos/pagination.dto';
+import { PaginationDTO } from '../../common/dtos/pagination.dto';
 
 @Controller('gallery')
 export class GalleryController {

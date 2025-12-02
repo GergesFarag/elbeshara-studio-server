@@ -3,7 +3,7 @@ import { GalleryService } from './gallery.service';
 import { GalleryController } from './gallery.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GalleryItem, GalleryItemSchema } from './schemas/gallery-item.schema';
-import { PaginationService } from 'src/common/services/pagination';
+import { PaginationService } from '../../common/services/pagination';
 
 @Module({
   imports: [
