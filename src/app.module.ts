@@ -14,6 +14,11 @@ import { GalleryModule } from './modules/gallery/gallery.module';
     MongooseModule.forRootAsync({
       useFactory: (config: ConfigService) => ({
         uri: config.get<string>('MONGO_URI'),
+        connectionFactory: (connection) => {
+          if (connection.readyState === 1) {
+            return connection;
+          }
+        },
       }),
       inject: [ConfigService],
     }),
