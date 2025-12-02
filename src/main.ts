@@ -6,29 +6,24 @@ import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 import { Express } from 'express';
 
-let cachedApp: Express;
-
 async function bootstrap(): Promise<Express> {
-  if (!cachedApp) {
-    const expressApp: Express = express();
-    const app = await NestFactory.create(
-      AppModule,
-      new ExpressAdapter(expressApp),
-    );
-    app.setGlobalPrefix('api/v1');
-    app.useGlobalPipes(
-      new ValidationPipe({
-        whitelist: true,
-        forbidNonWhitelisted: true,
-        transform: true,
-      }),
-    );
-    app.useGlobalInterceptors(new ResponseInterceptor());
-    app.enableCors();
-    await app.init();
-    cachedApp = expressApp;
-  }
-  return cachedApp;
+  const expressApp: Express = express();
+  const app = await NestFactory.create(
+    AppModule,
+    new ExpressAdapter(expressApp),
+  );
+  app.setGlobalPrefix('api/v1');
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
+  app.useGlobalInterceptors(new ResponseInterceptor());
+  app.enableCors();
+  await app.init();
+  return expressApp;
 }
 
 // For Vercel serverless deployment
