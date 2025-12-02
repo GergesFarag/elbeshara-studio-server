@@ -12,14 +12,13 @@ import { GalleryModule } from './modules/gallery/gallery.module';
       envFilePath: '.env',
     }),
     MongooseModule.forRootAsync({
-      useFactory: (config: ConfigService) => ({
-        uri: config.get<string>('MONGO_URI'),
-        connectionFactory: (connection) => {
-          if (connection.readyState === 1) {
-            return connection;
-          }
-        },
-      }),
+      useFactory: async (config: ConfigService) => {
+        const uri = config.get<string>('MONGO_URI') as string;
+        const connection = await import('./config/db').then((m) =>
+          m.connectToDatabase(uri),
+        );
+        return { uri, connectionFactory: () => connection };
+      },
       inject: [ConfigService],
     }),
     GalleryModule,
