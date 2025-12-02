@@ -3,8 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
-import { Express } from 'express';
+import express, { Express } from 'express';
 
 let cachedApp: Express;
 
