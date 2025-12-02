@@ -5,12 +5,11 @@ import { ResponseInterceptor } from './common/interceptors/response.interceptor'
 import { ExpressAdapter } from '@nestjs/platform-express';
 import * as express from 'express';
 import { Express } from 'express';
-import serverlessExpress from '@vendia/serverless-express';
 
-let cachedServer: Express;
+let cachedApp: Express;
 
 async function bootstrap(): Promise<Express> {
-  if (!cachedServer) {
+  if (!cachedApp) {
     const expressApp: Express = express();
     const app = await NestFactory.create(
       AppModule,
@@ -25,22 +24,25 @@ async function bootstrap(): Promise<Express> {
       }),
     );
     app.useGlobalInterceptors(new ResponseInterceptor());
+    app.enableCors();
     await app.init();
-    cachedServer = expressApp;
+    cachedApp = expressApp;
   }
-  return cachedServer;
+  return cachedApp;
 }
 
-// For serverless deployment (AWS Lambda)
-export const handler = async (event: any, context: any) => {
-  const server = await bootstrap();
-  return serverlessExpress({ app: server })(event, context);
+// For Vercel serverless deployment
+export default async (req: any, res: any) => {
+  const app = await bootstrap();
+  app(req, res);
 };
 
 // For local development
 if (require.main === module) {
   const port = process.env.PORT ?? 3000;
-  bootstrap().then(() => {
-    console.log(`Application is running on: http://localhost:${port}`);
+  bootstrap().then((app) => {
+    app.listen(port, () => {
+      console.log(`Application is running on: http://localhost:${port}`);
+    });
   });
 }
