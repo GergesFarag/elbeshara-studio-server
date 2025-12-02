@@ -2,16 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { ResponseInterceptor } from './common/interceptors/response.interceptor';
-import { ExpressAdapter } from '@nestjs/platform-express';
-import * as express from 'express';
-import { Express } from 'express';
 
-async function bootstrap(): Promise<Express> {
-  const expressApp: Express = express();
-  const app = await NestFactory.create(
-    AppModule,
-    new ExpressAdapter(expressApp),
-  );
+async function bootstrap() {
+  const app = await NestFactory.create(AppModule);
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(
     new ValidationPipe({
@@ -21,23 +14,6 @@ async function bootstrap(): Promise<Express> {
     }),
   );
   app.useGlobalInterceptors(new ResponseInterceptor());
-  app.enableCors();
-  await app.init();
-  return expressApp;
+  await app.listen(process.env.PORT ?? 3000);
 }
-
-// For Vercel serverless deployment
-export default async (req: any, res: any) => {
-  const app = await bootstrap();
-  app(req, res);
-};
-
-// For local development
-if (require.main === module) {
-  const port = process.env.PORT ?? 3000;
-  bootstrap().then((app) => {
-    app.listen(port, () => {
-      console.log(`Application is running on: http://localhost:${port}`);
-    });
-  });
-}
+bootstrap();
