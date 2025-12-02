@@ -12,7 +12,6 @@ export default async function handler(req, res) {
     const adapter = new ExpressAdapter(expressApp);
     const app = await NestFactory.create(AppModule, adapter);
     await app.init();
-
     cachedServer = expressApp.listen(0);
   }
 

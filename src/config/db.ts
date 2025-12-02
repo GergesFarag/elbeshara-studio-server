@@ -8,7 +8,7 @@ if (!cached) {
 
 export async function connectToDatabase(uri: string) {
   if (cached.conn) {
-    console.log('Connection Retrieved!');
+    console.log('Connection Retrieved Sccessfully!');
     return cached.conn;
   }
 
