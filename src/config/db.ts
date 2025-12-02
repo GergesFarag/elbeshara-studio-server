@@ -7,9 +7,13 @@ if (!cached) {
 }
 
 export async function connectToDatabase(uri: string) {
-  if (cached.conn) return cached.conn;
+  if (cached.conn) {
+    console.log('Connection Retrieved!');
+    return cached.conn;
+  }
 
   if (!cached.promise) {
+    console.log('Connection Stablished!');
     cached.promise = mongoose.connect(uri).then((mongoose) => {
       return mongoose;
     });
