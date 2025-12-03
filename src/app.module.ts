@@ -1,9 +1,12 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GalleryModule } from './modules/gallery/gallery.module';
+import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import helmet from 'helmet';
+import { PromotionsModule } from './modules/promotions/promotions.module';
 
 @Module({
   imports: [
@@ -22,8 +25,13 @@ import { GalleryModule } from './modules/gallery/gallery.module';
       inject: [ConfigService],
     }),
     GalleryModule,
+    PromotionsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(helmet(), LoggerMiddleware).forRoutes('*path');
+  }
+}

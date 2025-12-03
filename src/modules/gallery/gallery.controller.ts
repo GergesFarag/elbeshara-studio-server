@@ -7,7 +7,7 @@ import { PaginationDTO } from '../../common/dtos/pagination.dto';
 export class GalleryController {
   constructor(private readonly galleryService: GalleryService) {}
   @Get('')
-  getAll(@Query() pagination: PaginationDTO) {
+  findAll(@Query() pagination: PaginationDTO) {
     return this.galleryService.findAll(pagination);
   }
   @Post('')
