@@ -7,6 +7,8 @@ import { GalleryModule } from './modules/gallery/gallery.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import helmet from 'helmet';
 import { PromotionsModule } from './modules/promotions/promotions.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { AdminModule } from './modules/admin/admin.module';
 
 @Module({
   imports: [
@@ -26,6 +28,8 @@ import { PromotionsModule } from './modules/promotions/promotions.module';
     }),
     GalleryModule,
     PromotionsModule,
+    AuthModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],
