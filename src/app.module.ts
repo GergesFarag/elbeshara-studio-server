@@ -1,14 +1,19 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GalleryModule } from './modules/gallery/gallery.module';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
-import helmet from 'helmet';
 import { PromotionsModule } from './modules/promotions/promotions.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
+import helmet from 'helmet';
 
 @Module({
   imports: [
@@ -34,8 +39,11 @@ import { AdminModule } from './modules/admin/admin.module';
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {
+export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(helmet(), LoggerMiddleware).forRoutes('*path');
+    consumer.apply(helmet(), LoggerMiddleware).forRoutes({
+      path: '*path',
+      method: RequestMethod.ALL,
+    });
   }
 }

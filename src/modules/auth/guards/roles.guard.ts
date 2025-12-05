@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
-import { RolesEnum } from 'src/common/enums/roles.enum';
+import { RolesEnum } from '../../../common/enums/roles.enum';
 import { ROLES_KEY } from '../decorators/roles.decorator';
 
 @Injectable()

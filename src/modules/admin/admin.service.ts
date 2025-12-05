@@ -5,10 +5,10 @@ import {
 } from '@nestjs/common';
 import { CreateAdminDto } from './dtos/create-admin.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Admin } from './entities/admin.entity';
+import { Admin } from './schemas/admin.schema';
 import { Model } from 'mongoose';
 import { JWTPayload } from '../auth/types/jwtPayload';
-import { BcryptService } from 'src/common/services/bcrypt';
+import { BcryptService } from '../../common/services/bcrypt';
 
 @Injectable()
 export class AdminService {

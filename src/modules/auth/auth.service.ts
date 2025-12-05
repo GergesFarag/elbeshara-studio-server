@@ -1,13 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { LoginDto } from './dtos/login.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Admin } from '../admin/entities/admin.entity';
+import { Admin } from '../admin/schemas/admin.schema';
 import { Model } from 'mongoose';
-import { BcryptService } from 'src/common/services/bcrypt';
+import { BcryptService } from '../../common/services/bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { CreateAdminDto } from '../admin/dtos/create-admin.dto';
 import { JWTPayload } from './types/jwtPayload';
-import { RolesEnum } from 'src/common/enums/roles.enum';
+import { RolesEnum } from '../../common/enums/roles.enum';
 
 @Injectable()
 export class AuthService {

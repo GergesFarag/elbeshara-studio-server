@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { JwtModule, JwtService } from '@nestjs/jwt';
+import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
-import { BcryptService } from 'src/common/services/bcrypt';
+import { BcryptService } from '../../common/services/bcrypt';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Admin, AdminSchema } from '../admin/entities/admin.entity';
+import { Admin, AdminSchema } from '../admin/schemas/admin.schema';
 
 @Module({
   imports: [

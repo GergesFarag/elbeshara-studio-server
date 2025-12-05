@@ -6,11 +6,11 @@ import {
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { ResponseDto, ResponseWithMetaDto } from '../dtos/response.dto';
 
-export interface Response<T> {
-  status: string;
-  data: T;
-  meta?: {
+interface PaginatedResponse<T> {
+  items: T[];
+  meta: {
     page: number;
     limit: number;
     total: number;
@@ -19,30 +19,43 @@ export interface Response<T> {
 }
 
 @Injectable()
-export class ResponseInterceptor<T> implements NestInterceptor<T, Response<T>> {
+export class ResponseInterceptor<T> implements NestInterceptor<
+  T,
+  ResponseWithMetaDto<T> | ResponseDto<T>
+> {
   intercept(
     context: ExecutionContext,
     next: CallHandler,
-  ): Observable<Response<T>> {
+  ): Observable<ResponseDto<T> | ResponseWithMetaDto<T>> {
     return next.handle().pipe(
       map((data) => {
-        if (
-          data &&
-          typeof data === 'object' &&
-          'items' in data &&
-          'meta' in data
-        ) {
+        if (this.isPaginatedResponse(data)) {
           return {
             status: 'success',
             data: data.items,
             meta: data.meta,
-          };
+          } as ResponseWithMetaDto<T>;
         }
         return {
           status: 'success',
           data,
-        };
+        } as ResponseDto<T>;
       }),
+    );
+  }
+
+  private isPaginatedResponse(data: any): data is PaginatedResponse<T> {
+    return (
+      data &&
+      typeof data === 'object' &&
+      'items' in data &&
+      Array.isArray(data.items) &&
+      'meta' in data &&
+      typeof data.meta === 'object' &&
+      'page' in data.meta &&
+      'limit' in data.meta &&
+      'total' in data.meta &&
+      'totalPages' in data.meta
     );
   }
 }
