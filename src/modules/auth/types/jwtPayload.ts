@@ -1,4 +1,4 @@
-import { RolesEnum } from 'src/common/enums/roles.enum';
+import { RolesEnum } from '../../../common/enums/roles.enum';
 
 export type JWTPayload = {
   id: string;

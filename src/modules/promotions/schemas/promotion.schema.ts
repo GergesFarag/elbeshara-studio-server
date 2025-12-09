@@ -1,27 +1,29 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Type } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
-
+import { IsDate, IsNotEmpty } from 'class-validator';
+export interface IPromotion {
+  title: string;
+  description: string;
+  validFrom: Date;
+  validTo: Date;
+}
 @Schema()
-export class Promotion {
+export class Promotion implements IPromotion {
   @Prop({
     required: true,
   })
-  @IsNotEmpty()
-  @IsString()
   title: string;
 
   @Prop({
     required: true,
   })
-  @IsNotEmpty()
-  @IsString()
   description: string;
 
   @Prop({
     required: true,
   })
   @IsNotEmpty()
+  @IsDate()
   @Type(() => Date)
   validFrom: Date;
 
@@ -29,6 +31,7 @@ export class Promotion {
     required: true,
   })
   @IsNotEmpty()
+  @IsDate()
   @Type(() => Date)
   validTo: Date;
 }

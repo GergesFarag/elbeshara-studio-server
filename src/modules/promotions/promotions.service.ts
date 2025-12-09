@@ -34,6 +34,20 @@ export class PromotionsService {
     const newPromotion = new this.promotionModel(promotion);
     return await newPromotion.save();
   }
+  async update(id: string, dto: Partial<CreatePromotionDTO>) {
+    if (dto.validFrom && dto.validTo) {
+      this.validatePromotionDates(dto as CreatePromotionDTO);
+    }
+    let response;
+    try {
+      response = await this.promotionModel.findByIdAndUpdate(id, dto, {
+        new: true,
+      });
+    } catch (_) {
+      throw new BadRequestException('Invalid promotion ID');
+    }
+    return response;
+  }
 
   private validatePromotionDates(promotion: CreatePromotionDTO): void {
     if (promotion.validFrom >= promotion.validTo) {

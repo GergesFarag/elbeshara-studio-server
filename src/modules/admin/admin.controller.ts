@@ -12,8 +12,8 @@ import { CreateAdminDto } from './dtos/create-admin.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { RolesEnum } from 'src/common/enums/roles.enum';
-import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { RolesEnum } from '../../common/enums/roles.enum';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { JWTPayload } from '../auth/types/jwtPayload';
 
 @UseGuards(AuthGuard, RolesGuard)

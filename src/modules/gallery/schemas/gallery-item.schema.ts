@@ -3,8 +3,15 @@ import { HydratedDocument } from 'mongoose';
 
 export type GalleryItemDocument = HydratedDocument<GalleryItem>;
 
+export interface IGalleryItem {
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+  description: string;
+}
+
 @Schema({ timestamps: true })
-export class GalleryItem {
+export class GalleryItem implements IGalleryItem {
   @Prop({
     required: true,
   })
@@ -23,10 +30,10 @@ export class GalleryItem {
 }
 
 export const GalleryItemSchema = SchemaFactory.createForClass(GalleryItem);
-GalleryItemSchema.set('toJSON', {
-  transform: (doc, ret: any) => {
-    delete ret.createdAt;
-    delete ret.updatedAt;
-    return ret;
-  },
-});
+// GalleryItemSchema.set('toJSON', {
+//   transform: (doc, ret: any) => {
+//     delete ret.createdAt;
+//     delete ret.updatedAt;
+//     return ret;
+//   },
+// });

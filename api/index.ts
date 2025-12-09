@@ -1,18 +1,30 @@
-import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../src/app.module';
 import { ExpressAdapter } from '@nestjs/platform-express';
-import { ValidationPipe } from '@nestjs/common';
-import { ResponseInterceptor } from '../src/common/interceptors/response.interceptor';
-import express, { Express } from 'express';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
+import express, { Express, Request, Response } from 'express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { NestFactory } from '@nestjs/core';
 
 let cachedApp: Express;
 
-export default async function handler(req, res) {
+export default async function handler(req: Request, res: Response) {
   if (!cachedApp) {
     const expressApp = express();
     const adapter = new ExpressAdapter(expressApp);
     const app = await NestFactory.create(AppModule, adapter);
-    app.setGlobalPrefix('api/v1');
+
+    const config = new DocumentBuilder()
+      .setTitle('El-Beshara Doc')
+      .setDescription('API documentation for El-Beshara')
+      .setVersion('1.0')
+      .build();
+    const documentFactory = () => SwaggerModule.createDocument(app, config);
+    SwaggerModule.setup('api-docs', app, documentFactory());
+    app.enableVersioning({
+      type: VersioningType.URI,
+      defaultVersion: '1',
+      prefix: 'api/v',
+    });
     app.useGlobalPipes(
       new ValidationPipe({
         whitelist: true,
@@ -20,7 +32,6 @@ export default async function handler(req, res) {
         transform: true,
       }),
     );
-    app.useGlobalInterceptors(new ResponseInterceptor());
     app.enableCors();
     await app.init();
     cachedApp = expressApp;

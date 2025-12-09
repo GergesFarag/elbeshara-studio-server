@@ -7,6 +7,7 @@ import {
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ResponseDto, ResponseWithMetaDto } from '../dtos/response.dto';
+import { ClassConstructor, plainToInstance } from 'class-transformer';
 
 interface PaginatedResponse<T> {
   items: T[];
@@ -23,6 +24,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<
   T,
   ResponseWithMetaDto<T> | ResponseDto<T>
 > {
+  constructor(private readonly dtoClass: ClassConstructor<T>) {}
   intercept(
     context: ExecutionContext,
     next: CallHandler,
@@ -32,7 +34,9 @@ export class ResponseInterceptor<T> implements NestInterceptor<
         if (this.isPaginatedResponse(data)) {
           return {
             status: 'success',
-            data: data.items,
+            data: plainToInstance(this.dtoClass, data.items, {
+              excludeExtraneousValues: true,
+            }),
             meta: data.meta,
           } as ResponseWithMetaDto<T>;
         }

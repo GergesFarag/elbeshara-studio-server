@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { GalleryItem } from './schemas/gallery-item.schema';
 import { Model } from 'mongoose';
@@ -23,5 +23,17 @@ export class GalleryService {
     const galleryItem = new this.galleryItemModel(dto);
     const result = await galleryItem.save();
     return result;
+  }
+  async update(id: string, dto: Partial<CreateGalleryItemDTO>) {
+    return await this.galleryItemModel.findByIdAndUpdate(id, dto, {
+      new: true,
+    });
+  }
+  async deleteMany(ids: string[]) {
+    try {
+      return await this.galleryItemModel.deleteMany({ _id: { $in: ids } });
+    } catch {
+      throw new BadRequestException('Invalid gallery item IDs');
+    }
   }
 }

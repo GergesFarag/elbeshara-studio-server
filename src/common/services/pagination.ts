@@ -24,7 +24,6 @@ export class PaginationService {
     const [items, total] = await Promise.all([
       model
         .find(filter)
-        .select('-createdAt -updatedAt -__v')
         .sort(sort)
         .skip(skip)
         .limit(limit)
