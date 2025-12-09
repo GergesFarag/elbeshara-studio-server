@@ -1,4 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEmail,
   IsNotEmpty,
@@ -16,6 +17,7 @@ export class Admin {
   @IsString()
   @MinLength(3)
   @MaxLength(20)
+  @ApiProperty()
   username: string;
 
   @Prop({
@@ -24,6 +26,7 @@ export class Admin {
   })
   @IsNotEmpty()
   @IsStrongPassword()
+  @ApiProperty()
   password: string;
 
   @Prop({
@@ -32,6 +35,7 @@ export class Admin {
   })
   @IsEmail()
   @IsNotEmpty()
+  @ApiProperty()
   email: string;
 
   @Prop({
@@ -39,6 +43,7 @@ export class Admin {
     default: false,
   })
   @IsNotEmpty()
+  @ApiProperty()
   isSuperAdmin: boolean;
 }
 export const AdminSchema = SchemaFactory.createForClass(Admin);
