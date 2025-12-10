@@ -13,10 +13,23 @@ import { Admin, AdminSchema } from '../admin/schemas/admin.schema';
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (config: ConfigService) => {
-        console.log(config.get('JWT_SECRET_KEY'));
+        const secret =
+          config.get<string>('JWT_SECRET_KEY') ||
+          config.get<string>('JWT_SECRET') ||
+          process.env.JWT_SECRET_KEY ||
+          process.env.JWT_SECRET;
+
+        if (!secret) {
+          throw new Error(
+            'JWT_SECRET_KEY or JWT_SECRET must be defined in environment variables',
+          );
+        }
+
+        console.log('JWT Secret loaded:', secret ? '✓' : '✗');
+
         return {
           global: true,
-          secret: config.get<string>('JWT_SECRET_KEY') as string,
+          secret,
           signOptions: {
             expiresIn: '1h',
           },
