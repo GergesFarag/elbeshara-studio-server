@@ -40,7 +40,9 @@ export default async function handler(req: Request, res: Response) {
         transform: true,
       }),
     );
-    app.enableCors();
+    app.enableCors({
+      origin: '*',
+    });
     await app.init();
     cachedApp = expressApp;
   }
