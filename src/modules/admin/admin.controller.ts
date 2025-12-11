@@ -40,4 +40,9 @@ export class AdminController {
   getAdminData(@CurrentUser() user: JWTPayload) {
     return this.adminService.getAdminData(user);
   }
+
+  @Get('all')
+  getAllAdmins() {
+    return this.adminService.getAllAdmins();
+  }
 }
