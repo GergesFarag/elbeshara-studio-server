@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
+import { Expose } from 'class-transformer';
 import {
   IsEmail,
   IsNotEmpty,
@@ -18,6 +19,7 @@ export class Admin {
   @MinLength(3)
   @MaxLength(20)
   @ApiProperty()
+  @Expose()
   username: string;
 
   @Prop({
@@ -35,6 +37,7 @@ export class Admin {
   })
   @IsEmail()
   @IsNotEmpty()
+  @Expose()
   @ApiProperty()
   email: string;
 
@@ -43,6 +46,7 @@ export class Admin {
     default: false,
   })
   @IsNotEmpty()
+  @Expose()
   @ApiProperty()
   isSuperAdmin: boolean;
 }

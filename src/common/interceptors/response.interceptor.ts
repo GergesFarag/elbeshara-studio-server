@@ -40,6 +40,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<
             meta: data.meta,
           } as ResponseWithMetaDto<T>;
         }
+        console.log('Data:', data);
         return {
           status: 'success',
           data,
