@@ -36,6 +36,7 @@ export class AdminService {
       password: await this.bcryptService.hashPassword(dto.password),
     });
     await newAdmin.save();
+    return newAdmin;
   }
 
   async removeAdmin(adminId: string) {

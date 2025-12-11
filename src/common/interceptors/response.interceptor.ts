@@ -40,10 +40,13 @@ export class ResponseInterceptor<T> implements NestInterceptor<
             meta: data.meta,
           } as ResponseWithMetaDto<T>;
         }
-        console.log('Data:', data);
+
+        // Transform single objects or arrays
         return {
           status: 'success',
-          data,
+          data: plainToInstance(this.dtoClass, data, {
+            excludeExtraneousValues: true,
+          }),
         } as ResponseDto<T>;
       }),
     );
