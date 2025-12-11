@@ -15,10 +15,12 @@ import { Roles } from '../auth/decorators/roles.decorator';
 import { RolesEnum } from '../../common/enums/roles.enum';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { JWTPayload } from '../auth/types/jwtPayload';
+import { TransformDTO } from 'src/common/decorators/transform-dto.decorator';
 
 @UseGuards(AuthGuard, RolesGuard)
 @Roles(RolesEnum.SUPER_ADMIN)
 @Controller('admin')
+@TransformDTO(CreateAdminDto)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
 
