@@ -31,7 +31,7 @@ import { Admin, AdminSchema } from '../admin/schemas/admin.schema';
           global: true,
           secret,
           signOptions: {
-            expiresIn: '1h',
+            expiresIn: '5h',
           },
         };
       },

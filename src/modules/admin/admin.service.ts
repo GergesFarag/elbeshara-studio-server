@@ -56,6 +56,7 @@ export class AdminService {
   }
 
   async getAllAdmins(dto: PaginationDTO) {
+    console.log(dto)
     return await this.paginationService.paginate<Admin>(
       this.adminModel,
       dto.page,
