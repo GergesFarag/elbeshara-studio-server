@@ -19,11 +19,13 @@ export class PaginationService {
     limit = PAGINATION_LIMIT,
     sort: any = { _id: -1 },
     filter: any = {},
+    select?: string,
   ): Promise<PaginationResult<T>> {
     const skip = (page - 1) * limit;
     const [items, total] = await Promise.all([
       model
         .find(filter)
+        .select(select || '')
         .sort(sort)
         .skip(skip)
         .limit(limit)

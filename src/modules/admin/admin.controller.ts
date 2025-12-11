@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { AdminService } from './admin.service';
@@ -17,6 +18,7 @@ import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { JWTPayload } from '../auth/types/jwtPayload';
 import { TransformDTO } from '../../common/decorators/transform-dto.decorator';
 import { AdminResponseDto } from './dtos/admin-response.dto';
+import { PaginationDTO } from 'src/common/dtos/pagination.dto';
 
 @UseGuards(AuthGuard, RolesGuard)
 @Roles(RolesEnum.SUPER_ADMIN)
@@ -42,7 +44,7 @@ export class AdminController {
   }
 
   @Get('all')
-  getAllAdmins() {
-    return this.adminService.getAllAdmins();
+  getAllAdmins(@Query() dto: PaginationDTO) {
+    return this.adminService.getAllAdmins(dto);
   }
 }

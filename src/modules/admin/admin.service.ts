@@ -9,12 +9,15 @@ import { Admin } from './schemas/admin.schema';
 import { Model } from 'mongoose';
 import { JWTPayload } from '../auth/types/jwtPayload';
 import { BcryptService } from '../../common/services/bcrypt';
+import { PaginationService } from 'src/common/services/pagination';
+import { PaginationDTO } from 'src/common/dtos/pagination.dto';
 
 @Injectable()
 export class AdminService {
   constructor(
     @InjectModel(Admin.name) private adminModel: Model<Admin>,
     private bcryptService: BcryptService,
+    private readonly paginationService: PaginationService,
   ) {}
 
   async getAdminData(user: JWTPayload) {
@@ -52,9 +55,14 @@ export class AdminService {
     return result;
   }
 
-  async getAllAdmins() {
-    return await this.adminModel
-      .find({ isSuperAdmin: false })
-      .select('-isSuperAdmin');
+  async getAllAdmins(dto: PaginationDTO) {
+    return await this.paginationService.paginate<Admin>(
+      this.adminModel,
+      dto.page,
+      dto.limit,
+      { _id: -1 },
+      { isSuperAdmin: false },
+      '-isSuperAdmin -password',
+    );
   }
 }
