@@ -31,6 +31,7 @@ export class ResponseInterceptor<T> implements NestInterceptor<
   ): Observable<ResponseDto<T> | ResponseWithMetaDto<T>> {
     return next.handle().pipe(
       map((data) => {
+        console.log('Data:', data);
         if (this.isPaginatedResponse(data)) {
           return {
             status: 'success',

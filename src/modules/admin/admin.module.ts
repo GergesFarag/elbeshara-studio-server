@@ -5,7 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Admin, AdminSchema } from './schemas/admin.schema';
 import { BcryptService } from '../../common/services/bcrypt';
 import { AuthModule } from '../auth/auth.module';
-import { PaginationService } from 'src/common/services/pagination';
 
 @Module({
   imports: [
@@ -13,7 +12,7 @@ import { PaginationService } from 'src/common/services/pagination';
     AuthModule,
   ],
   controllers: [AdminController],
-  providers: [AdminService, BcryptService, PaginationService],
+  providers: [AdminService, BcryptService],
   exports: [AdminService],
 })
 export class AdminModule {}

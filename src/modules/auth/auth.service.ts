@@ -7,6 +7,7 @@ import { BcryptService } from '../../common/services/bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { JWTPayload } from './types/jwtPayload';
 import { RolesEnum } from '../../common/enums/roles.enum';
+import { LoginResponseDto } from './dtos/login-response.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,7 +17,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async adminLogin(dto: LoginDto) {
+  async adminLogin(dto: LoginDto): Promise<LoginResponseDto> {
     const admin = await this.adminModel
       .findOne({ email: dto.email })
       .select('+password');
@@ -35,6 +36,9 @@ export class AuthService {
       username: admin.username.toString(),
       role: admin.isSuperAdmin ? RolesEnum.SUPER_ADMIN : RolesEnum.ADMIN,
     };
-    return await this.jwtService.signAsync(payload);
+    return {
+      accessToken: await this.jwtService.signAsync(payload),
+      isSuperAdmin: admin.isSuperAdmin,
+    };
   }
 }

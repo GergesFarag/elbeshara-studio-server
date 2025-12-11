@@ -1,3 +1,8 @@
+import { Expose } from 'class-transformer';
+
 export class LoginResponseDto {
-  readonly accessToken: string;
+  @Expose()
+  accessToken: string;
+  @Expose()
+  isSuperAdmin: boolean;
 }
