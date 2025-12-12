@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -9,24 +10,37 @@ import {
 } from '@nestjs/common';
 import { PromotionsService } from './promotions.service';
 import { PaginationDTO } from '../../common/dtos/pagination.dto';
-import { CreatePromotionDTO } from './dtos/create-promotion';
+import { CreatePromotionDTO } from './dtos/create-promotion.dto';
 import { TransformDTO } from '../../common/decorators/transform-dto.decorator';
 import { PromotionResponseDto } from './dtos/promotion-response.dto';
+import { DeletePromotionDTO } from './dtos/delete-promotion.dto';
+import { DeleteResponseDto } from './dtos/delete-response.dto';
 
 @Controller('promotions')
-@TransformDTO(PromotionResponseDto)
 export class PromotionsController {
   constructor(private readonly promotionsService: PromotionsService) {}
+
   @Get()
+  @TransformDTO(PromotionResponseDto)
   findAll(@Query() pagination: PaginationDTO) {
     return this.promotionsService.findAll(pagination);
   }
+
   @Post()
+  @TransformDTO(PromotionResponseDto)
   create(@Body() dto: CreatePromotionDTO) {
     return this.promotionsService.create(dto);
   }
+
   @Patch(':id')
+  @TransformDTO(PromotionResponseDto)
   update(@Param('id') id: string, @Body() dto: Partial<CreatePromotionDTO>) {
     return this.promotionsService.update(id, dto);
+  }
+
+  @Delete()
+  @TransformDTO(DeleteResponseDto)
+  deleteAll(@Body() dto: DeletePromotionDTO) {
+    return this.promotionsService.deleteAll(dto);
   }
 }

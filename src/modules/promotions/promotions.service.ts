@@ -4,7 +4,8 @@ import { Promotion } from './schemas/promotion.schema';
 import { Model } from 'mongoose';
 import { PaginationService } from '../../common/services/pagination';
 import { PaginationDTO } from '../../common/dtos/pagination.dto';
-import { CreatePromotionDTO } from './dtos/create-promotion';
+import { CreatePromotionDTO } from './dtos/create-promotion.dto';
+import { DeletePromotionDTO } from './dtos/delete-promotion.dto';
 
 @Injectable()
 export class PromotionsService {
@@ -41,7 +42,9 @@ export class PromotionsService {
     }
     return response;
   }
-
+  async deleteAll(dto: DeletePromotionDTO) {
+    return await this.promotionModel.deleteMany({ _id: { $in: dto.ids } });
+  }
   private validatePromotionDates(promotion: CreatePromotionDTO): void {
     if (promotion.validFrom >= promotion.validTo) {
       throw new BadRequestException('validFrom must be earlier than validTo');

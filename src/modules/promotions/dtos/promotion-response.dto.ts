@@ -1,5 +1,5 @@
 import { Expose } from 'class-transformer';
-import { CreatePromotionDTO } from './create-promotion';
+import { CreatePromotionDTO } from './create-promotion.dto';
 
 export class PromotionResponseDto extends CreatePromotionDTO {
   @Expose()
