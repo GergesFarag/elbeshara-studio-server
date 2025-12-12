@@ -42,8 +42,12 @@ export class PromotionsService {
     }
     return response;
   }
-  async deleteAll(dto: DeletePromotionDTO) {
-    return await this.promotionModel.deleteMany({ _id: { $in: dto.ids } });
+  async delete(id: string) {
+    const item = await this.promotionModel.findByIdAndDelete(id);
+    if (!item) {
+      throw new BadRequestException('Invalid promotion ID');
+    }
+    return item;
   }
   private validatePromotionDates(promotion: CreatePromotionDTO): void {
     if (promotion.validFrom >= promotion.validTo) {

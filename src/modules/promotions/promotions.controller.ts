@@ -38,9 +38,9 @@ export class PromotionsController {
     return this.promotionsService.update(id, dto);
   }
 
-  @Delete()
-  @TransformDTO(DeleteResponseDto)
-  deleteAll(@Body() dto: DeletePromotionDTO) {
-    return this.promotionsService.deleteAll(dto);
+  @Delete(':id')
+  @TransformDTO(PromotionResponseDto)
+  delete(@Param('id') id: string) {
+    return this.promotionsService.delete(id);
   }
 }
