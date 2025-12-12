@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { PaginationService } from '../../common/services/pagination';
 import { PaginationDTO } from '../../common/dtos/pagination.dto';
 import { CreatePromotionDTO } from './dtos/create-promotion.dto';
-import { DeletePromotionDTO } from './dtos/delete-promotion.dto';
 
 @Injectable()
 export class PromotionsService {
@@ -32,15 +31,12 @@ export class PromotionsService {
     if (dto.validFrom && dto.validTo) {
       this.validatePromotionDates(dto as CreatePromotionDTO);
     }
-    let response;
-    try {
-      response = await this.promotionModel.findByIdAndUpdate(id, dto, {
-        new: true,
-      });
-    } catch (_) {
+    const response = await this.promotionModel.findById(id);
+    if (!response) {
       throw new BadRequestException('Invalid promotion ID');
     }
-    return response;
+    Object.assign(response, dto);
+    return await response.save();
   }
   async delete(id: string) {
     const item = await this.promotionModel.findByIdAndDelete(id);

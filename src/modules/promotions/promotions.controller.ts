@@ -13,9 +13,6 @@ import { PaginationDTO } from '../../common/dtos/pagination.dto';
 import { CreatePromotionDTO } from './dtos/create-promotion.dto';
 import { TransformDTO } from '../../common/decorators/transform-dto.decorator';
 import { PromotionResponseDto } from './dtos/promotion-response.dto';
-import { DeletePromotionDTO } from './dtos/delete-promotion.dto';
-import { DeleteResponseDto } from './dtos/delete-response.dto';
-
 @Controller('promotions')
 export class PromotionsController {
   constructor(private readonly promotionsService: PromotionsService) {}
