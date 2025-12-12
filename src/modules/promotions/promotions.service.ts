@@ -14,18 +14,11 @@ export class PromotionsService {
   ) {}
 
   async findAll(pagination: PaginationDTO) {
-    const now = new Date();
-    const filter = {
-      validFrom: { $lte: now },
-      validTo: { $gte: now },
-    };
-
     return await this.paginationService.paginate<Promotion>(
       this.promotionModel,
       pagination.page,
       pagination.limit,
       { _id: -1 },
-      filter,
     );
   }
 
