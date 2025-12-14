@@ -20,7 +20,7 @@ export class PaginationService {
     sort: any = { _id: -1 },
     filter: any = {},
     select?: string,
-    populate?: string,
+    populate?: Record<'path' | 'select', any>,
   ): Promise<PaginationResult<T>> {
     const skip = (page - 1) * limit;
     const [items, total] = await Promise.all([
@@ -30,7 +30,7 @@ export class PaginationService {
         .sort(sort)
         .skip(skip)
         .limit(limit)
-        .populate(populate || '')
+        .populate(populate?.path, populate?.select)
         .lean(),
       model.countDocuments(filter),
     ]);

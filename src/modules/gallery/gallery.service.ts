@@ -30,6 +30,8 @@ export class GalleryService {
       limit,
       { _id: -1 },
       { type: galleryItems.IMAGE },
+      undefined,
+      { path: 'admin', select: '-password' },
     );
   }
   async findVideos({ limit, page }: PaginationDTO) {
@@ -39,6 +41,8 @@ export class GalleryService {
       limit,
       { _id: -1 },
       { type: galleryItems.VIDEO },
+      undefined,
+      { path: 'admin', select: '-password' },
     );
   }
   async findAudios({ limit, page }: PaginationDTO) {
@@ -48,6 +52,8 @@ export class GalleryService {
       limit,
       { _id: -1 },
       { type: galleryItems.AUDIO },
+      undefined,
+      { path: 'admin', select: '-password' },
     );
   }
   async create(dto: CreateGalleryItemDTO, admin: JWTPayload) {

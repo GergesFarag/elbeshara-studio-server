@@ -5,4 +5,8 @@ export class CreateGalleryItemResponseDTO extends CreateGalleryItemDTO {
   @Expose()
   @Transform(({ obj }) => obj._id?.toString() || obj._id)
   _id: string;
+
+  @Expose()
+  @Transform(({ obj }) => obj.admin.username)
+  created_by: string;
 }
