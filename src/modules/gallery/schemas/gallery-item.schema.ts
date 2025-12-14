@@ -2,7 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, Types } from 'mongoose';
 import { IGalleryItem } from '../interfaces/gallery-item.interface';
 import { galleryItems, GalleryItemType } from '../gellery-item.type';
-import { Admin, AdminDocument } from 'src/modules/admin/schemas/admin.schema';
+import { Admin, AdminDocument } from '../../admin/schemas/admin.schema';
 
 export type GalleryItemDocument = HydratedDocument<GalleryItem>;
 

@@ -13,13 +13,13 @@ import { GalleryService } from './gallery.service';
 import { CreateGalleryItemDTO } from './dtos/create-galleryItem.dto';
 import { PaginationDTO } from '../../common/dtos/pagination.dto';
 import { TransformDTO } from '../../common/decorators/transform-dto.decorator';
-import { CurrentUser } from 'src/common/decorators/current-user.decorator';
+import { CurrentUser } from '../../common/decorators/current-user.decorator';
 import { JWTPayload } from '../auth/types/jwtPayload';
 import { CreateGalleryItemResponseDTO } from './dtos/create-galleryItem-response.dto';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
-import { RolesEnum } from 'src/common/enums/roles.enum';
+import { RolesEnum } from '../../common/enums/roles.enum';
 
 @Controller('gallery')
 @TransformDTO(CreateGalleryItemResponseDTO)
@@ -50,7 +50,7 @@ export class GalleryController {
   create(@Body() dto: CreateGalleryItemDTO, @CurrentUser() admin: JWTPayload) {
     return this.galleryService.create(dto, admin);
   }
-  
+
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(RolesEnum.ADMIN, RolesEnum.SUPER_ADMIN)
   @Patch(':id')

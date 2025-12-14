@@ -1,4 +1,4 @@
-import { AdminDocument } from 'src/modules/admin/schemas/admin.schema';
+import { AdminDocument } from '../../admin/schemas/admin.schema';
 import { GalleryItemType } from '../gellery-item.type';
 
 export interface IGalleryItem {
