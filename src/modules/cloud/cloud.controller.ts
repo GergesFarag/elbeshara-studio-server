@@ -10,7 +10,7 @@ import { SignatureResponseDto } from './dto/signature-response.dto';
 @Controller('cloud')
 export class CloudController {
   constructor(private readonly cloudService: CloudService) {}
-  @Get('signature')
+  @Post('signature')
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(RolesEnum.ADMIN, RolesEnum.SUPER_ADMIN)
   @TransformDTO(SignatureResponseDto)
