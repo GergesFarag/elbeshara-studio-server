@@ -1,8 +1,9 @@
 import { Expose } from 'class-transformer';
-import { IsNotEmpty, IsString } from 'class-validator';
-import { IGalleryItem } from '../schemas/gallery-item.schema';
+import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { BaseDTO } from '../../../common/dtos/base.dto';
 import { ApiProperty } from '@nestjs/swagger';
+import { IGalleryItem } from '../interfaces/gallery-item.interface';
+import { galleryItems, GalleryItemType } from '../gellery-item.type';
 
 export class CreateGalleryItemDTO extends BaseDTO implements IGalleryItem {
   @IsString()
@@ -10,19 +11,22 @@ export class CreateGalleryItemDTO extends BaseDTO implements IGalleryItem {
   @Expose()
   @ApiProperty()
   title: string;
+
   @IsNotEmpty()
   @IsString()
   @Expose()
   @ApiProperty()
   url: string;
+
   @IsNotEmpty()
   @IsString()
   @Expose()
   @ApiProperty()
-  thumbnailUrl: string;
+  public_id: string;
+
   @IsNotEmpty()
-  @IsString()
+  @IsEnum(galleryItems)
   @Expose()
   @ApiProperty()
-  description: string;
+  type: GalleryItemType;
 }

@@ -9,7 +9,9 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
+import { HydratedDocument } from 'mongoose';
 
+export type AdminDocument = HydratedDocument<Admin>;
 @Schema()
 export class Admin {
   @Prop({

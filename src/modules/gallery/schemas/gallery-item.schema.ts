@@ -1,14 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { HydratedDocument } from 'mongoose';
+import { HydratedDocument, Types } from 'mongoose';
+import { IGalleryItem } from '../interfaces/gallery-item.interface';
+import { galleryItems, GalleryItemType } from '../gellery-item.type';
+import { Admin, AdminDocument } from 'src/modules/admin/schemas/admin.schema';
 
 export type GalleryItemDocument = HydratedDocument<GalleryItem>;
-
-export interface IGalleryItem {
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-  description: string;
-}
 
 @Schema({ timestamps: true })
 export class GalleryItem implements IGalleryItem {
@@ -22,18 +18,23 @@ export class GalleryItem implements IGalleryItem {
   })
   url: string;
 
-  @Prop()
-  thumbnailUrl: string;
+  @Prop({
+    required: true,
+  })
+  public_id: string;
 
-  @Prop()
-  description: string;
+  @Prop({
+    type: String,
+    enum: galleryItems,
+    required: true,
+  })
+  type: GalleryItemType;
+
+  @Prop({
+    type: Types.ObjectId,
+    ref: Admin.name,
+  })
+  admin: AdminDocument;
 }
 
 export const GalleryItemSchema = SchemaFactory.createForClass(GalleryItem);
-// GalleryItemSchema.set('toJSON', {
-//   transform: (doc, ret: any) => {
-//     delete ret.createdAt;
-//     delete ret.updatedAt;
-//     return ret;
-//   },
-// });

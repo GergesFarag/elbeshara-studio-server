@@ -4,15 +4,16 @@ import { SignatureResponseDto } from './dto/signature-response.dto';
 @Injectable()
 export class CloudService {
   getSignature(): SignatureResponseDto {
+    const timestamp = Math.floor(Date.now() / 1000);
     const signature = cloudinary.utils.api_sign_request(
       {
-        timestamp: Math.floor(Date.now() / 1000),
+        timestamp,
       },
       process.env.CLOUDINARY_API_SECRET as string,
     );
     return {
       signature,
-      timestamp: Math.floor(Date.now() / 1000),
+      timestamp,
       cloudName: process.env.CLOUDINARY_NAME as string,
       apiKey: process.env.CLOUDINARY_API_KEY as string,
     };

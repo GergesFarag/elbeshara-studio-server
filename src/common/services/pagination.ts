@@ -29,6 +29,7 @@ export class PaginationService {
         .sort(sort)
         .skip(skip)
         .limit(limit)
+        .populate('admin')
         .lean(),
       model.countDocuments(filter),
     ]);
