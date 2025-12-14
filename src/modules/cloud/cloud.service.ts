@@ -8,6 +8,7 @@ export class CloudService {
     const signature = cloudinary.utils.api_sign_request(
       {
         timestamp,
+        source: 'uw',
       },
       process.env.CLOUDINARY_API_SECRET as string,
     );
