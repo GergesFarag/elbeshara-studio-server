@@ -4,7 +4,7 @@ import { SignatureResponseDto } from './dto/signature-response.dto';
 @Injectable()
 export class CloudService {
   getSignature(): SignatureResponseDto {
-    const timestamp = Math.floor(new Date().getTime() / 1000) + 3600; // Add 1 hour validity
+    const timestamp = Math.floor(new Date().getTime() / 1000);
     const signature = cloudinary.utils.api_sign_request(
       {
         timestamp,
