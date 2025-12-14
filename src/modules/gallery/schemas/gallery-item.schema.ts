@@ -11,11 +11,6 @@ export class GalleryItem implements IGalleryItem {
   @Prop({
     required: true,
   })
-  title: string;
-
-  @Prop({
-    required: true,
-  })
   url: string;
 
   @Prop({
