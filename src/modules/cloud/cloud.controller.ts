@@ -14,8 +14,8 @@ export class CloudController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(RolesEnum.ADMIN, RolesEnum.SUPER_ADMIN)
   @TransformDTO(SignatureResponseDto)
-  getSignature() {
-    return this.cloudService.getSignature();
+  getSignature(@Body() body: any) {
+    return this.cloudService.getSignature(body);
   }
 
   @Post('validate-signature')
