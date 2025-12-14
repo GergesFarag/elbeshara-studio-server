@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Type } from 'class-transformer';
 import { IsDate, IsNotEmpty } from 'class-validator';
+
 export interface IPromotion {
   title: string;
   description: string;

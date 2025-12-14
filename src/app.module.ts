@@ -13,6 +13,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { PromotionsModule } from './modules/promotions/promotions.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
+import { CloudModule } from './modules/cloud/cloud.module';
 import helmet from 'helmet';
 
 @Module({
@@ -35,6 +36,7 @@ import helmet from 'helmet';
     PromotionsModule,
     AuthModule,
     AdminModule,
+    CloudModule,
   ],
   controllers: [AppController],
   providers: [AppService],
