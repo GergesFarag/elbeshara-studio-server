@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { ApiProperty } from '@nestjs/swagger';
-import { BaseDTO } from 'src/common/dtos/base.dto';
+import { BaseDTO } from '../../../common/dtos/base.dto';
 
 export class AdminResponseDto extends BaseDTO {
   @Expose()
