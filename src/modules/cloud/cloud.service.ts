@@ -14,8 +14,19 @@ export class CloudService {
     return {
       signature,
       timestamp,
-      cloudName: process.env.CLOUDINARY_NAME as string,
+      cloudName: process.env.CLOUDINARY_CLOUD_NAME as string,
       apiKey: process.env.CLOUDINARY_API_KEY as string,
     };
+  }
+  validateSignature(signature: string, timestamp: number): boolean {
+    const expectedSignature = cloudinary.utils.api_sign_request(
+      {
+        timestamp,
+      },
+      process.env.CLOUDINARY_API_SECRET as string,
+    );
+    console.log('Expected:', expectedSignature);
+    console.log('Received:', signature);
+    return signature === expectedSignature;
   }
 }

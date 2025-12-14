@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { CloudService } from './cloud.service';
 import { AuthGuard } from '../auth/guards/auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
@@ -14,7 +14,15 @@ export class CloudController {
   @UseGuards(AuthGuard, RolesGuard)
   @Roles(RolesEnum.ADMIN, RolesEnum.SUPER_ADMIN)
   @TransformDTO(SignatureResponseDto)
-  getSignature() { 
+  getSignature() {
     return this.cloudService.getSignature();
+  }
+
+  @Post('validate-signature')
+  validateSignature(
+    @Body('signature') signature: string,
+    @Body('timestamp') timestamp: number,
+  ): boolean {
+    return this.cloudService.validateSignature(signature, timestamp);
   }
 }
