@@ -12,10 +12,9 @@ export class AboutService {
   }
 
   async update(updateDto: UpdateAboutDto) {
-    // const data = await this.aboutModel.findOneAndUpdate({}, updateDto, {
-    //   new: true,
-    // });
-    const data = await this.aboutModel.create(updateDto);
+    const data = await this.aboutModel.findOneAndUpdate({}, updateDto, {
+      new: true,
+    });
     if (!data) throw new BadRequestException('No Data Found');
     return data.save();
   }

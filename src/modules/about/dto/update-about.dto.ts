@@ -47,9 +47,11 @@ export class UpdateAboutDto implements IAbout {
   name: string;
 
   @IsOptional()
-  @IsString()
   @IsNotEmpty()
-  logo: string;
+  logo: {
+    public_id: string;
+    url: string;
+  };
 
   @IsOptional()
   @IsString()

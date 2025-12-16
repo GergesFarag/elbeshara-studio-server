@@ -1,16 +1,15 @@
-import { SocialMediaType } from '../types/helpers.type';
+import { AddressType, SocialMediaType } from '../types/helpers.type';
 
 export interface IAbout {
   name: string;
-  logo: string;
+  logo: {
+    public_id: string;
+    url: string;
+  };
   slogan: string;
   description: string;
   socialMedia: SocialMediaType[];
-  address: {
-    building: number;
-    street: string;
-    city: string;
-  };
+  address: AddressType;
   email: string;
   phoneNumbers: string[];
 }

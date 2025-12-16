@@ -6,7 +6,10 @@ export class AboutResponseDto implements IAbout {
   @Expose()
   name: string;
   @Expose()
-  logo: string;
+  logo: {
+    public_id: string;
+    url: string;
+  };
   @Expose()
   slogan: string;
   @Expose()
