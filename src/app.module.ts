@@ -14,6 +14,7 @@ import { PromotionsModule } from './modules/promotions/promotions.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { CloudModule } from './modules/cloud/cloud.module';
+import { AboutModule } from './modules/about/about.module';
 import helmet from 'helmet';
 
 @Module({
@@ -37,6 +38,7 @@ import helmet from 'helmet';
     AuthModule,
     AdminModule,
     CloudModule,
+    AboutModule,
   ],
   controllers: [AppController],
   providers: [AppService],
