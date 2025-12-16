@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Promotion } from './schemas/promotion.schema';
 import { Model } from 'mongoose';
 import { PaginationService } from '../../common/services/pagination';
-import { PaginationDTO } from '../../common/dtos/pagination.dto';
+import { QueryDto } from '../../common/dtos/pagination.dto';
 import { CreatePromotionDTO } from './dtos/create-promotion.dto';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class PromotionsService {
     private paginationService: PaginationService,
   ) {}
 
-  async findAll(pagination: PaginationDTO) {
+  async findAll(pagination: QueryDto) {
     return await this.paginationService.paginate<Promotion>(
       this.promotionModel,
       pagination.page,

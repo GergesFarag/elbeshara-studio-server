@@ -30,6 +30,11 @@ export class GalleryItem implements IGalleryItem {
     ref: Admin.name,
   })
   admin: AdminDocument;
+
+  @Prop({
+    default: false,
+  })
+  isReel: boolean;
 }
 
 export const GalleryItemSchema = SchemaFactory.createForClass(GalleryItem);

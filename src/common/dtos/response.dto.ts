@@ -1,4 +1,4 @@
-import { PaginationDTO } from './pagination.dto';
+import { QueryDto } from './pagination.dto';
 
 export class ResponseDto<T> {
   status: string;
@@ -6,5 +6,5 @@ export class ResponseDto<T> {
 }
 
 export class ResponseWithMetaDto<T> extends ResponseDto<T> {
-  meta: PaginationDTO;
+  meta: QueryDto;
 }

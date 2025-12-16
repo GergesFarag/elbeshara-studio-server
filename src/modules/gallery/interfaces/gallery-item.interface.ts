@@ -5,5 +5,6 @@ export interface IGalleryItem {
   url: string;
   public_id: string;
   type: GalleryItemType;
+  isReel: boolean;
   admin?: AdminDocument;
 }

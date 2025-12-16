@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { GalleryItem } from './schemas/gallery-item.schema';
 import { Model } from 'mongoose';
 import { CreateGalleryItemDTO } from './dtos/create-galleryItem.dto';
-import { PaginationDTO } from '../../common/dtos/pagination.dto';
+import { QueryDto, VideoQueryDto } from '../../common/dtos/pagination.dto';
 import { PaginationService } from '../../common/services/pagination';
 import { galleryItems } from './gellery-item.type';
 import { AdminService } from '../admin/admin.service';
@@ -16,14 +16,14 @@ export class GalleryService {
     private paginatioService: PaginationService,
     private adminService: AdminService,
   ) {}
-  async findAll({ limit, page }: PaginationDTO) {
+  async findAll({ limit, page }: QueryDto) {
     return await this.paginatioService.paginate(
       this.galleryItemModel,
       page,
       limit,
     );
   }
-  async findImages({ limit, page }: PaginationDTO) {
+  async findImages({ limit, page }: QueryDto) {
     return await this.paginatioService.paginate(
       this.galleryItemModel,
       page,
@@ -34,18 +34,18 @@ export class GalleryService {
       { path: 'admin', select: '-password' },
     );
   }
-  async findVideos({ limit, page }: PaginationDTO) {
+  async findVideos({ limit, page, isReel }: VideoQueryDto) {
     return await this.paginatioService.paginate(
       this.galleryItemModel,
       page,
       limit,
       { _id: -1 },
-      { type: galleryItems.VIDEO },
+      { type: galleryItems.VIDEO, isReel },
       undefined,
       { path: 'admin', select: '-password' },
     );
   }
-  async findAudios({ limit, page }: PaginationDTO) {
+  async findAudios({ limit, page }: QueryDto) {
     return await this.paginatioService.paginate(
       this.galleryItemModel,
       page,
@@ -60,6 +60,10 @@ export class GalleryService {
     const adminUploadedBy = await this.adminService.getAdminData(admin);
     if (!adminUploadedBy) {
       throw new BadRequestException('Invalid admin ID');
+    }
+    console.log('DTO isReel : ', dto.isReel, dto.type);
+    if (dto.isReel && dto.type !== galleryItems.VIDEO) {
+      throw new BadRequestException('Cannot add not video type as reel');
     }
     const galleryItem = new this.galleryItemModel({
       ...dto,

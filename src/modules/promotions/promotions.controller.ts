@@ -9,7 +9,7 @@ import {
   Query,
 } from '@nestjs/common';
 import { PromotionsService } from './promotions.service';
-import { PaginationDTO } from '../../common/dtos/pagination.dto';
+import { QueryDto } from '../../common/dtos/pagination.dto';
 import { CreatePromotionDTO } from './dtos/create-promotion.dto';
 import { TransformDTO } from '../../common/decorators/transform-dto.decorator';
 import { PromotionResponseDto } from './dtos/promotion-response.dto';
@@ -19,7 +19,7 @@ export class PromotionsController {
 
   @Get()
   @TransformDTO(PromotionResponseDto)
-  findAll(@Query() pagination: PaginationDTO) {
+  findAll(@Query() pagination: QueryDto) {
     return this.promotionsService.findAll(pagination);
   }
 

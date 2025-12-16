@@ -10,7 +10,7 @@ import { Model } from 'mongoose';
 import { JWTPayload } from '../auth/types/jwtPayload';
 import { BcryptService } from '../../common/services/bcrypt';
 import { PaginationService } from '../../common/services/pagination';
-import { PaginationDTO } from '../../common/dtos/pagination.dto';
+import { QueryDto } from '../../common/dtos/pagination.dto';
 
 @Injectable()
 export class AdminService {
@@ -55,7 +55,7 @@ export class AdminService {
     return result;
   }
 
-  async getAllAdmins(dto: PaginationDTO) {
+  async getAllAdmins(dto: QueryDto) {
     console.log(dto);
     return await this.paginationService.paginate<Admin>(
       this.adminModel,

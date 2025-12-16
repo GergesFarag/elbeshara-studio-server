@@ -1,7 +1,7 @@
-import { Type } from 'class-transformer';
-import { IsOptional, IsPositive } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
+import { IsBoolean, IsOptional, IsPositive } from 'class-validator';
 
-export class PaginationDTO {
+export class QueryDto {
   @IsOptional()
   @IsPositive()
   @Type(() => Number)
@@ -11,4 +11,15 @@ export class PaginationDTO {
   @IsPositive()
   @Type(() => Number)
   readonly limit: number = 5;
+}
+
+export class VideoQueryDto extends QueryDto {
+  @IsOptional()
+  @Transform(({ value }) => {
+    if (value === 'true') return true;
+    if (value === 'false') return false;
+    return value;
+  })
+  @IsBoolean()
+  readonly isReel: boolean;
 }
