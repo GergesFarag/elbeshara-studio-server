@@ -4,16 +4,11 @@ import { SocialMediaType } from '../types/helpers.type';
 
 export class AboutResponseDto implements IAbout {
   @Expose()
-  name: string;
-  @Expose()
   logo: {
     public_id: string;
     url: string;
   };
-  @Expose()
-  slogan: string;
-  @Expose()
-  description: string;
+
   @Expose()
   socialMedia: SocialMediaType[];
   @Expose()

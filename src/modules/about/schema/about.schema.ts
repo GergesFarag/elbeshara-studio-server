@@ -4,9 +4,6 @@ import { AddressType, SocialMediaType } from '../types/helpers.type';
 
 @Schema()
 export class About implements IAbout {
-  @Prop({ type: String, required: true })
-  name: string;
-
   @Prop({
     type: {
       public_id: { type: String, required: true },
@@ -18,12 +15,6 @@ export class About implements IAbout {
     public_id: string;
     url: string;
   };
-
-  @Prop({ type: String, required: true })
-  slogan: string;
-
-  @Prop({ type: String, required: true })
-  description: string;
 
   @Prop({
     type: [

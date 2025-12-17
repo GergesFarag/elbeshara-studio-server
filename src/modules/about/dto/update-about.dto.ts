@@ -42,26 +42,11 @@ class AddressDto implements AddressType {
 
 export class UpdateAboutDto implements IAbout {
   @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  name: string;
-
-  @IsOptional()
   @IsNotEmpty()
   logo: {
     public_id: string;
     url: string;
   };
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  slogan: string;
-
-  @IsOptional()
-  @IsString()
-  @IsNotEmpty()
-  description: string;
 
   @IsOptional()
   @IsArray()
