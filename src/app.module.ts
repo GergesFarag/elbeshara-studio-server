@@ -1,4 +1,5 @@
 import {
+  Inject,
   MiddlewareConsumer,
   Module,
   NestModule,
@@ -15,7 +16,9 @@ import { AuthModule } from './modules/auth/auth.module';
 import { AdminModule } from './modules/admin/admin.module';
 import { CloudModule } from './modules/cloud/cloud.module';
 import { AboutModule } from './modules/about/about.module';
+import { MailModule } from './mail/mail.module';
 import helmet from 'helmet';
+import { MailerModule } from '@nestjs-modules/mailer';
 
 @Module({
   imports: [
@@ -33,12 +36,31 @@ import helmet from 'helmet';
       },
       inject: [ConfigService],
     }),
+    MailerModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        transport: {
+          host: config.get<string>('MAIL_HOST'),
+          port: config.get<number>('MAIL_PORT'),
+          secure: false,
+          auth: {
+            user: config.get<string>('MAIL_USER'),
+            pass: config.get<string>('MAIL_PASS'),
+          },
+        },
+        defaults: {
+          from: `"Elbeshara Studio" <${config.get<string>('MAIL_FROM')}>`,
+        },
+      }),
+      imports: [ConfigModule],
+    }),
     GalleryModule,
     PromotionsModule,
     AuthModule,
     AdminModule,
     CloudModule,
     AboutModule,
+    MailModule,
   ],
   controllers: [AppController],
   providers: [AppService],
