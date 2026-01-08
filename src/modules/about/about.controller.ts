@@ -1,6 +1,9 @@
-import { Body, Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put, UseGuards } from '@nestjs/common';
 import { AboutService } from './about.service';
 import { UpdateAboutDto } from './dto/update-about.dto';
+import { AuthGuard } from '../auth/guards/auth.guard';
+import { Roles } from '../auth/decorators/roles.decorator';
+import { RolesEnum } from '../../common/enums/roles.enum';
 
 @Controller('about')
 export class AboutController {
@@ -11,6 +14,8 @@ export class AboutController {
   }
 
   @Put()
+  @UseGuards(AuthGuard)
+  @Roles(RolesEnum.SUPER_ADMIN)
   updateData(@Body() updateData: UpdateAboutDto) {
     return this.aboutService.update(updateData);
   }

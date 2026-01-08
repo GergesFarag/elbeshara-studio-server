@@ -8,11 +8,11 @@ import { TransformDTO } from '../../common/decorators/transform-dto.decorator';
 import { SignatureResponseDto } from './dto/signature-response.dto';
 
 @Controller('cloud')
+@UseGuards(AuthGuard, RolesGuard)
+@Roles(RolesEnum.ADMIN, RolesEnum.SUPER_ADMIN)
 export class CloudController {
   constructor(private readonly cloudService: CloudService) {}
   @Post('signature')
-  @UseGuards(AuthGuard, RolesGuard)
-  @Roles(RolesEnum.ADMIN, RolesEnum.SUPER_ADMIN)
   @TransformDTO(SignatureResponseDto)
   getSignature(@Body() body: any) {
     return this.cloudService.getSignature(body);
